@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
@@ -6,37 +7,46 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div id="navbar-placeholder"></div>
+<body class="index-page">
+  <div id="navbar-placeholder"></div>
+
   <div class="container my-5">
     <h1 class="text-center">StudyHive</h1>
-    <form id="searchForm" class="mb-5">
+
+    <form id="searchForm" class="5">
       <div class="row g-3">
         <div class="col-md-3">
-          <input type="text" id="disciplina" class="form-control" placeholder="Disciplina">
+          <select id="disciplina" class="form-select">
+            <option value="">Todas as Disciplinas</option>
+          </select>
         </div>
+
         <div class="col-md-3">
           <select id="nivel" class="form-select">
-            <option value="">Escolher Nível</option>
+            <option value="">Todos os níveis</option>
             <option value="Basico">Básico</option>
             <option value="Secundario">Secundário</option>
             <option value="Universitario">Universitário</option>
           </select>
         </div>
+
         <div class="col-md-3">
           <select id="modalidade" class="form-select">
-            <option value="">Modalidade</option>
+            <option value="">Todas as Disciplinas</option>
             <option value="Presencial">Presencial</option>
             <option value="Online">Online</option>
           </select>
         </div>
+
         <div class="col-md-3">
           <button type="submit" class="btn btn-primary w-100">Procurar</button>
         </div>
       </div>
     </form>
 
+    <br>
     <h2>Explicadores Encontrados</h2>
+    <br>
     <div id="results" class="row g-4"></div>
   </div>
 
@@ -46,6 +56,13 @@
   <script src="js/navbar.js"></script>
   <script>
     loadNavbar(); 
+  </script>
+
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('footer.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('footer-placeholder').innerHTML = data);
   </script>
 </body>
 </html>
