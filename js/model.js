@@ -87,7 +87,7 @@ function getExplicadores() {
 if (!localStorage.getItem('explicadoresIniciaisGuardados')) {
   localStorage.setItem('explicadoresIniciaisGuardados', 'true');
 
-  const explicadoresDefault = [ /* os teus explicadores fixos com disciplina */ ];
+  const explicadoresDefault = [ ];
 
   const existentes = JSON.parse(localStorage.getItem('explicadores')) || [];
   const todos = existentes.concat(explicadoresDefault);

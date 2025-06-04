@@ -4,9 +4,22 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
   const disciplina = document.getElementById('disciplina').value;
   const nivel = document.getElementById('nivel').value;
   const modalidade = document.getElementById('modalidade').value;
-  const precoMax = document.getElementById('precoMax')?.value;
-  const user = JSON.parse(localStorage.getItem('userLoggedIn'));
+  const precoMax = parseFloat(document.getElementById('precoMax')?.value);
 
+  const todos = getExplicadores();
+  const filtrados = todos.filter(exp => {
+    return (
+      (!disciplina || exp.disciplina.toLowerCase().includes(disciplina.toLowerCase())) &&
+      (!nivel || exp.nivel === nivel) &&
+      (!modalidade || exp.modalidade === modalidade) &&
+      (!precoMax || exp.preco <= precoMax)
+    );
+  });
+
+  renderExplicadores(filtrados);
+
+  // 🎯 HISTÓRICO DE BUSCAS
+  const user = JSON.parse(localStorage.getItem('userLoggedIn'));
   if (user && user.tipo === 'aluno') {
     const historico = JSON.parse(localStorage.getItem('historicoBuscas')) || [];
     historico.push({
@@ -18,19 +31,8 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
     });
     localStorage.setItem('historicoBuscas', JSON.stringify(historico));
   }
-
-  const resultados = getExplicadores().filter(explicador => {
-    return (
-      (disciplina === '' || explicador.disciplina.toLowerCase().includes(disciplina)) &&
-      (nivel === '' || explicador.nivel === nivel) &&
-      (modalidade === '' || explicador.modalidade === modalidade) &&
-      (!precoMax || explicador.preco <= precoMax) &&
-      (!localFiltro || explicador.localizacao?.toLowerCase().includes(localFiltro))
-    );
-  });
-
-  renderExplicadores(resultados);
 });
+
 
 
 
