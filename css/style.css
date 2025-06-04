@@ -171,6 +171,7 @@ h1, h2, h3 {
   border: 2px solid transparent;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-left: 120px;
 }
 
 .btn-primary:hover {
@@ -236,4 +237,57 @@ h1, h2, h3 {
 
 .footer-center {
   background-color: #161616;
+}
+
+.dataContainer{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+}
+
+.loginBtn{
+   background-color: #D32F2F;
+  border-color: #D32F2F;
+  font-size: 18px; 
+  padding: 15px 30px; 
+  border-radius: 30px; 
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.loginBtn:hover {
+  background-color: #B71C1C;
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  border-color: #B71C1C;
+}
+
+.entrarBtn{
+  background-color: #D32F2F;
+  border-color: #D32F2F;
+  font-size: 18px; 
+  padding: 15px 30px; 
+  border-radius: 30px; 
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.entrarBtn:hover {
+  background-color: #B71C1C;
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  border-color: #B71C1C;
 }

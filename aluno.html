@@ -32,10 +32,20 @@
 
         <div class="col-md-3">
           <select id="modalidade" class="form-select">
-            <option value="">Todas as Disciplinas</option>
+            <option value="">Todos os Métodos</option>
             <option value="Presencial">Presencial</option>
             <option value="Online">Online</option>
           </select>
+        </div>
+
+        <div class="col-md-3">
+          <input type="number" id="precoMax" class="form-control" placeholder="Preço máximo (€)">
+        </div>
+        <div class="col-md-3">
+          <input type="text" id="localAluno" class="form-control" placeholder="Sua Localização">
+        </div>
+        <div class="col-md-3">
+          <input type="text" id="localFiltro" class="form-control" placeholder="Filtrar por Localidade">
         </div>
 
         <div class="col-md-3">
@@ -51,7 +61,7 @@
   </div>
 
   <script src="js/model.js"></script>
-  <script src="js/view.js"></script>
+  <script src="/js/alunos.js"></script>
   <script src="js/app.js"></script>
   <script src="js/navbar.js"></script>
   <script>
@@ -60,7 +70,7 @@
 
   <div id="footer-placeholder"></div>
   <script>
-    fetch('footer.html')
+    fetch('/elements/footer.html')
       .then(response => response.text())
       .then(data => document.getElementById('footer-placeholder').innerHTML = data);
   </script>

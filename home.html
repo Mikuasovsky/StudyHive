@@ -19,7 +19,7 @@
     <p class="mb-5">Conecta-te para começar!</p>
 
     <div class="d-flex justify-content-center gap-4">
-      <a href="login.html" class="btn btn-primary btn-lg">Login</a>
+      <a href="login.html" class="loginBtn">Login</a>
       <a href="register.html" class="btn btn-success btn-lg">Criar Conta</a>
     </div>
 </div>
@@ -31,7 +31,7 @@
       if (user.tipo === 'admin') {
         window.location.href = 'admin.html';
       } else if (user.tipo === 'aluno') {
-        window.location.href = 'index.html';
+        window.location.href = 'aluno.html';
       } else if (user.tipo === 'explicador') {
         window.location.href = 'explicador.html';
       }
@@ -40,7 +40,7 @@
 
   <div id="footer-placeholder"></div>
   <script>
-    fetch('footer.html')
+    fetch('/elements/footer.html')
       .then(response => response.text())
       .then(data => document.getElementById('footer-placeholder').innerHTML = data);
   </script>

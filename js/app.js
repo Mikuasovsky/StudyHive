@@ -4,19 +4,24 @@ document.getElementById('searchForm').addEventListener('submit', function(e){
   const disciplina = document.getElementById('disciplina').value.toLowerCase();
   const nivel = document.getElementById('nivel').value;
   const modalidade = document.getElementById('modalidade').value;
+  const precoMax = parseFloat(document.getElementById('precoMax')?.value || 0);
+  const localFiltro = document.getElementById('localFiltro')?.value.toLowerCase();
 
   const resultados = getExplicadores().filter(explicador => {
     return (
       (disciplina === '' || explicador.disciplina.toLowerCase().includes(disciplina)) &&
       (nivel === '' || explicador.nivel === nivel) &&
-      (modalidade === '' || explicador.modalidade === modalidade)
+      (modalidade === '' || explicador.modalidade === modalidade) &&
+      (!precoMax || explicador.preco <= precoMax) &&
+      (!localFiltro || explicador.localizacao?.toLowerCase().includes(localFiltro))
     );
   });
 
   renderExplicadores(resultados);
 });
 
-// preencher o dropdown das disciplinas
+
+
 function preencherDisciplinasDropdown() {
   const disciplinas = JSON.parse(localStorage.getItem('disciplinas')) || ['Matemática', 'Física', 'Inglês','História','Ciencias','Economia II','Português'];
   const disciplinaSelect = document.getElementById('disciplina');
@@ -29,5 +34,5 @@ function preencherDisciplinasDropdown() {
   });
 }
 
-//dropdown assim que carregar
+
 preencherDisciplinasDropdown();

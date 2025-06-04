@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
@@ -7,42 +8,46 @@
 </head>
 <body>
   <div id="navbar-placeholder"></div>
+
   <div class="container my-5">
     <h1 class="text-center mb-4">Cadastro de Explicador</h1>
     <form id="registerForm">
       <div class="mb-3">
-        <input type="text" id="nome" class="form-control" placeholder="Nome do Explicador">
+        <input type="text" id="nome" class="form-control" placeholder="Nome do Explicador" required>
       </div>
       <div class="mb-3">
-        <input type="text" id="disciplinas" class="form-control" placeholder="Disciplinas (separadas por vírgula)">
+        <input type="text" id="disciplinas" class="form-control" placeholder="Disciplinas (separadas por vírgula)" required>
       </div>
       <div class="mb-3">
-        <input type="number" id="preco" class="form-control" placeholder="Preço por Sessão">
+        <input type="number" id="preco" class="form-control" placeholder="Preço por Sessão (€)" required>
       </div>
       <div class="mb-3">
-        <select id="modalidadeReg" class="form-select">
+        <select id="modalidadeReg" class="form-select" required>
           <option value="">Modalidade</option>
           <option value="Presencial">Presencial</option>
           <option value="Online">Online</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-success">Cadastrar</button>
+      <div class="mb-3">
+        <input type="text" id="localizacao" class="form-control" placeholder="Localização (ex: Porto, Lisboa)" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" id="horarios" class="form-control" placeholder="Disponibilidade (ex: Seg 10h-12h, Qua 14h-16h)" required>
+      </div>
+      <div class="mb-3">
+        <input type="email" id="email" class="form-control" placeholder="Email de contacto" required>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Cadastrar</button>
     </form>
   </div>
 
-  <script>
-    document.getElementById('registerForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      alert('Cadastro enviado! (simulado)');
-    });
-  </script>
   <script src="js/navbar.js"></script>
   <script>loadNavbar();</script>
+  <script src="js/explicador.js"></script>
 
-  <!-- Footer dinâmico -->
   <div id="footer-placeholder"></div>
   <script>
-    fetch('footer.html')
+    fetch('/elements/footer.html')
       .then(response => response.text())
       .then(data => document.getElementById('footer-placeholder').innerHTML = data);
   </script>
