@@ -291,3 +291,52 @@ h1, h2, h3 {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   border-color: #B71C1C;
 }
+
+#perfilInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.voltarBtn{
+  background-color: #D32F2F;
+  border-color: #D32F2F;
+  font-size: 18px; 
+  padding: 15px 30px; 
+  border-radius: 30px; 
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+}
+.voltarBtn:hover {
+  background-color: #B71C1C;
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  border-color: #B71C1C;
+}
+
+.criarBtn{
+  background-color: #D32F2F;
+  border-color: #D32F2F;
+  font-size: 18px; 
+  padding: 15px 30px; 
+  border-radius: 30px; 
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.criarBtn:hover {
+  background-color: #B71C1C;
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  border-color: #B71C1C;
+}

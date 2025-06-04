@@ -35,7 +35,7 @@
           <option value="explicador">Explicador</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary w-100">Criar Conta</button>
+      <button type="submit" class="criarBtn w-100">Criar Conta</button>
     </form>
   </div>
 
@@ -57,10 +57,10 @@
       });
   </script>
 
-  <!-- Footer dinâmico -->
+  
   <div id="footer-placeholder"></div>
   <script>
-    fetch('footer.html')
+    fetch('/elements/footer.html')
       .then(response => response.text())
       .then(data => document.getElementById('footer-placeholder').innerHTML = data);
   </script>

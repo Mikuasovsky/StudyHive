@@ -23,7 +23,10 @@ function renderExplicadores(lista) {
           <p class="card-text"><strong>Localização:</strong> ${explicador.localizacao || "Não especificada"}</p>
           <p class="card-text"><strong>Classificação:</strong> ${explicador.classificacao || "N/A"} ⭐</p>
 
-          <a href="mailto:${explicador.email}" class="btn btn-sm btn-outline-success mt-2">Contactar por Email</a>
+          <a href="mailto:${explicador.email}" onclick="adicionarPontos(10)" class="btn btn-sm btn-outline-success mt-2">
+            Contactar por Email
+          </a>
+
           <button class="btn btn-outline-primary mt-2" onclick='addFavorito(${JSON.stringify(explicador)})'>Favoritar</button>
           ${rotaLink ? `<a href="${rotaLink}" target="_blank" class="btn btn-outline-secondary btn-sm">Ver Rota no Google Maps</a>` : ""}
         </div>
@@ -34,8 +37,19 @@ function renderExplicadores(lista) {
 }
 
 function addFavorito(explicador) {
+  
   let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+  const duplicado = favoritos.some(f => f.nome === explicador.nome && f.email === explicador.email);
+
+  if (duplicado) {
+    alert('Este explicador já está nos seus favoritos.');
+    return;
+  }
+
   favoritos.push(explicador);
   localStorage.setItem('favoritos', JSON.stringify(favoritos));
   alert('Adicionado aos favoritos!');
+  adicionarPontos(5);
 }
+
+
