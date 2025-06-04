@@ -340,3 +340,7 @@ h1, h2, h3 {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   border-color: #B71C1C;
 }
+
+#disciplinas{
+  margin-bottom: 15px;
+}

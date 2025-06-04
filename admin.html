@@ -3,73 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudyHive - Admin</title>
+  <title>Admin - StudyHive</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="navbar-placeholder"></div>
+  <div id="navbar-placeholder"></div>
+
   <div class="container my-5">
-    <h1 class="mb-4 text-center">Área de Admin</h1>
+    <h1 class="text-center mb-4">Área do Administrador</h1>
 
-    <h3>Adicionar Nova Disciplina</h3>
-    <form id="addDisciplinaForm" class="mb-5">
+    <!-- GERIR DISCIPLINAS -->
+    <h3>Gerir Disciplinas</h3>
+    <form id="addDisciplinaForm" class="mb-4">
       <div class="mb-3">
-        <input type="text" id="novaDisciplina" class="form-control" placeholder="Nome da Disciplina">
+        <input type="text" id="novaDisciplina" class="form-control" placeholder="Nova Disciplina">
       </div>
-      <button type="submit" class="btn btn-warning">Adicionar Disciplina</button>
+      <button type="submit" class="btn btn-primary">Adicionar Disciplina</button>
     </form>
-
-    <h3>Disciplinas Existentes</h3>
     <ul id="listaDisciplinas" class="list-group"></ul>
+
+    <hr class="my-4">
+
+    <!-- GERIR NÍVEIS DE ENSINO -->
+    <h3>Gerir Níveis de Ensino</h3>
+    <form id="addNivelForm" class="mb-4">
+      <div class="mb-3">
+        <input type="text" id="novoNivel" class="form-control" placeholder="Novo Nível (ex: Básico)">
+      </div>
+      <button type="submit" class="btn btn-info">Adicionar Nível</button>
+    </form>
+    <ul id="listaNiveis" class="list-group"></ul>
+
+    <hr class="my-4">
+
+    <!-- MONITORIZAR BUSCAS -->
+    <h3>Histórico de Buscas dos Alunos</h3>
+    <div id="tabelaBuscas"></div>
   </div>
 
-  <script>
-    let disciplinas = JSON.parse(localStorage.getItem('disciplinas')) || ['Matemática', 'Física', 'Inglês'];
-
-    function renderDisciplinas() {
-      const lista = document.getElementById('listaDisciplinas');
-      lista.innerHTML = '';
-      disciplinas.forEach((d, index) => {
-        const item = document.createElement('li');
-        item.className = 'list-group-item d-flex justify-content-between align-items-center';
-        item.innerHTML = `
-          ${d}
-          <button onclick="removerDisciplina(${index})" class="btn btn-danger btn-sm">Remover</button>
-        `;
-        lista.appendChild(item);
-      });
-    }
-
-    function removerDisciplina(index) {
-      disciplinas.splice(index, 1);
-      localStorage.setItem('disciplinas', JSON.stringify(disciplinas));
-      renderDisciplinas();
-    }
-
-    document.getElementById('addDisciplinaForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const nova = document.getElementById('novaDisciplina').value.trim();
-      if (nova) {
-        disciplinas.push(nova);
-        localStorage.setItem('disciplinas', JSON.stringify(disciplinas));
-        renderDisciplinas();
-        document.getElementById('novaDisciplina').value = '';
-      }
-    });
-
-    renderDisciplinas();
-  </script>
   <script src="js/navbar.js"></script>
-  <script>
-    loadNavbar(); 
-  </script>
-
-<div id="footer-placeholder"></div>
-<script>
-  fetch('/elements/footer.html')
-    .then(response => response.text())
-    .then(data => document.getElementById('footer-placeholder').innerHTML = data);
-</script>
+  <script src="js/admin.js"></script>
+  <script>loadNavbar();</script>
+  
+  
 </body>
 </html>

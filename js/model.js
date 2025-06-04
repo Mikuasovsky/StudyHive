@@ -1,4 +1,4 @@
-const explicadores = [
+const explicadoresDefault = [
   {
     id: 1,
     nome: "Ana Silva",
@@ -80,5 +80,17 @@ const explicadores = [
 ];
 
 function getExplicadores() {
-  return explicadores;
+  const personalizados = JSON.parse(localStorage.getItem('explicadores')) || [];
+  return explicadoresDefault.concat(personalizados);
+}
+
+if (!localStorage.getItem('explicadoresIniciaisGuardados')) {
+  localStorage.setItem('explicadoresIniciaisGuardados', 'true');
+
+  const explicadoresDefault = [ /* os teus explicadores fixos com disciplina */ ];
+
+  const existentes = JSON.parse(localStorage.getItem('explicadores')) || [];
+  const todos = existentes.concat(explicadoresDefault);
+
+  localStorage.setItem('explicadores', JSON.stringify(todos));
 }
