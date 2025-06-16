@@ -344,3 +344,33 @@ h1, h2, h3 {
 #disciplinas{
   margin-bottom: 15px;
 }
+
+/* Corrige problemas de z-index */
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050 ;
+  position: fixed ;
+}
+
+.index-page::before {
+  pointer-events: none ;
+  z-index: -10 ;
+}
+
+
+/* Melhora a aparência do modal */
+.modal-content {
+  border: none;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+}

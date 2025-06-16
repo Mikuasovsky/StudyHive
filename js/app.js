@@ -5,6 +5,7 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
   const nivel = document.getElementById('nivel').value;
   const modalidade = document.getElementById('modalidade').value;
   const precoMax = parseFloat(document.getElementById('precoMax')?.value);
+  const localidade = document.getElementById('localFiltro')?.value;
 
   const todos = getExplicadores();
   const filtrados = todos.filter(exp => {
@@ -12,7 +13,10 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
       (!disciplina || exp.disciplina.toLowerCase().includes(disciplina.toLowerCase())) &&
       (!nivel || exp.nivel === nivel) &&
       (!modalidade || exp.modalidade === modalidade) &&
-      (!precoMax || exp.preco <= precoMax)
+      (!precoMax || exp.preco <= precoMax) &&
+      (!localidade || exp.localizacao.toLowerCase().includes(localidade.toLowerCase()))
+
+
     );
   });
 

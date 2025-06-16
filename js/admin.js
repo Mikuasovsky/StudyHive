@@ -111,3 +111,14 @@ function mostrarBuscas() {
 }
 
 mostrarBuscas();
+
+
+document.getElementById('limparHistorico').addEventListener('click', function () {
+  const confirmar = confirm('Tens a certeza que queres apagar todo o histórico de buscas? Esta ação não pode ser desfeita.');
+
+  if (confirmar) {
+    localStorage.removeItem('historicoBuscas');
+    mostrarBuscas(); 
+    alert('Histórico de buscas limpo com sucesso.');
+  }
+});
