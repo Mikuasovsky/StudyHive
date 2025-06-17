@@ -3,16 +3,26 @@ function loadNavbar() {
       .then(response => response.text())
       .then(data => {
         document.getElementById('navbar-placeholder').innerHTML = data;
-        checkAuth(); // Só depois da navbar ser carregada, verifica autenticação
+        checkAuth(); 
       });
   }
   
   function checkAuth() {
     const user = JSON.parse(localStorage.getItem('userLoggedIn'));
     if (!user) {
-      window.location.href = 'home.html'; // Se não estiver logado, volta para Home
+      window.location.href = 'home.html'; 
     } else {
-      document.getElementById('userName').textContent = `Olá, ${user.nome} (${user.tipo})`;
+      
+      const userNameElement = document.getElementById('userName');
+      if (userNameElement) {
+        userNameElement.textContent = `Olá, ${user.nome} (${user.tipo})`;
+      }
+      
+      
+      const perfilLink = document.getElementById('perfilLink');
+      if (perfilLink) {
+        perfilLink.href = user.tipo === 'explicador' ? 'perfil-explicador.html' : 'perfil.html';
+      }
     }
   }
   

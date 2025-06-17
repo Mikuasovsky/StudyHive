@@ -5,7 +5,7 @@ function adicionarPontos(valor) {
   const ultima = parseInt(localStorage.getItem('ultimoContacto') || 0);
   const agora = Date.now();
 
-  if (valor === 10 && agora - ultima < 10000) return; // 10s cooldown para contacto
+  if (valor === 10 && agora - ultima < 10000) return; 
 
   user.pontos = (user.pontos || 0) + valor;
   localStorage.setItem('userLoggedIn', JSON.stringify(user));

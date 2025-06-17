@@ -8,6 +8,7 @@ document.getElementById('registerForm').addEventListener('submit', function(e){
   const localizacao = document.getElementById('localizacao').value;
   const horarios = document.getElementById('horarios').value.split(',').map(h => h.trim());
   const email = document.getElementById('email').value;
+  const descricao = document.getElementById('descricao').value;
   const classificacao = parseFloat((Math.random() * 2 + 3).toFixed(1));
 
   const novoExplicador = {
@@ -18,19 +19,49 @@ document.getElementById('registerForm').addEventListener('submit', function(e){
     localizacao,
     horarios,
     classificacao,
-    email
+    email,
+    descricao
   };
 
   const explicadoresGuardados = JSON.parse(localStorage.getItem('explicadores')) || [];
-  explicadoresGuardados.push(novoExplicador);
-  localStorage.setItem('explicadores', JSON.stringify(explicadoresGuardados));
+  
+  const perfisAtualizados = explicadoresGuardados.filter(e => e.email !== email);
+  
+  perfisAtualizados.push(novoExplicador);
+  localStorage.setItem('explicadores', JSON.stringify(perfisAtualizados));
 
-  alert('Explicador registado com sucesso!');
-  window.location.href = 'home.html';
+  const user = JSON.parse(localStorage.getItem('userLoggedIn'));
+  if (user) {
+    user.tipo = 'explicador';
+    localStorage.setItem('userLoggedIn', JSON.stringify(user));
+  }
+
+  alert('Perfil de explicador atualizado com sucesso!');
+  window.location.href = 'perfil-explicador.html';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const lista = JSON.parse(localStorage.getItem('disciplinas')) || [];
+  const disciplinasPadrao = [
+    'Matemática',
+    'Português',
+    'Física',
+    'Química',
+    'Biologia',
+    'Geografia',
+    'História',
+    'Inglês',
+    'Filosofia',
+    'Economia',
+    'Programação',
+    'Geometria',
+  ];
+
+  const lista = JSON.parse(localStorage.getItem('disciplinas')) || disciplinasPadrao;
+  
+  if (!localStorage.getItem('disciplinas')) {
+    localStorage.setItem('disciplinas', JSON.stringify(disciplinasPadrao));
+  }
+
   const select = document.getElementById('disciplinas');
   lista.forEach(d => {
     const opt = document.createElement('option');

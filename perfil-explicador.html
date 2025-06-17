@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyHive - Meu Perfil de Explicador</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div class="container my-5">
+    <div class="mb-4">
+      <h1>Meu Perfil de Explicador</h1>
+    </div>
+
+    <div id="perfilInfo" class="mb-5">
+      <div class="row">
+        <div class="col-md-8">
+          <div id="meuPerfilCard" class="card mb-4">
+            <div class="card-header bg-primary text-white">
+              <h3 class="mb-0">Meu Perfil</h3>
+            </div>
+            <div class="card-body" id="conteudoPerfil">
+              <div class="text-center py-5" id="semPerfil">
+                <p class="text-muted mb-4">Você ainda não criou seu perfil de explicador.</p>
+                <a href="explicador.html" class="criarPerfilBtn">Criar Perfil de Explicador</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+              <h3 class="mb-0">Meus Alunos</h3>
+            </div>
+            <div class="card-body">
+              <div id="listaAlunos">
+                <p class="text-muted text-center py-3">Nenhum aluno adicionou você aos favoritos ainda.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header bg-info text-white">
+              <h3 class="mb-0">Estatísticas</h3>
+            </div>
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-3">
+                <span>Total de Alunos:</span>
+                <strong id="totalAlunos">0</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-3">
+                <span>Avaliação Média:</span>
+                <strong id="avaliacaoMedia">-</strong>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Total de Aulas:</span>
+                <strong id="totalAulas">0</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/navbar.js"></script>
+  <script src="js/perfil-explicador.js"></script>
+
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('/elements/footer.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+    
+    fetch('/elements/navbar.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('navbar-placeholder').innerHTML = data);
+  </script>
+</body>
+</html>

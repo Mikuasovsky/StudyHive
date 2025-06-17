@@ -12,7 +12,6 @@
     <div class="container my-5">
     <h1 class="text-center mb-4">Área do Administrador</h1>
 
-    <!-- GERIR DISCIPLINAS -->
     <h3>Gerir Disciplinas</h3>
     <form id="addDisciplinaForm" class="mb-4">
       <div class="mb-3">
@@ -24,7 +23,6 @@
 
     <hr class="my-4">
 
-    <!-- GERIR NÍVEIS DE ENSINO -->
     <h3>Gerir Níveis de Ensino</h3>
     <form id="addNivelForm" class="mb-4">
       <div class="mb-3">
@@ -36,10 +34,54 @@
 
     <hr class="my-4">
 
-    <!-- MONITORIZAR BUSCAS -->
     <h3>Histórico de Buscas dos Alunos</h3>
-    <button id="limparHistorico" class="btn btn-sm btn-danger">🗑 Limpar Histórico</button>
-    <div id="tabelaBuscas"></div>
+    <button id="limparHistorico" class="btn btn-sm btn-danger mb-3">🗑 Limpar Histórico</button>
+    <div id="tabelaBuscas" class="mb-5"></div>
+
+    <hr class="my-4">
+
+    <h3>Gerenciar Alunos</h3>
+    <div class="mb-3">
+      <input type="text" id="filtroAlunos" class="form-control mb-3" placeholder="Filtrar alunos...">
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Data de Registo</th>
+            <th>Pontos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaAlunos">
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="my-4">
+
+    <h3>Gerenciar Explicadores</h3>
+    <div class="mb-3">
+      <input type="text" id="filtroExplicadores" class="form-control mb-3" placeholder="Filtrar explicadores...">
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Disciplina</th>
+            <th>Preço</th>
+            <th>Classificação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaExplicadores">
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <script src="js/navbar.js"></script>

@@ -30,7 +30,7 @@ function renderExplicadores(lista) {
           <button class="btn btn-outline-primary mt-2"
                   data-bs-toggle="modal"
                   data-bs-target="#marcacaoModal"
-                  data-explicador='${JSON.stringify(explicador)}'>
+                  data-explicador='${JSON.stringify(explicador).replace(/'/g, "'")}'>
             Marcar Explicação
           </button>
 
@@ -47,15 +47,30 @@ function renderExplicadores(lista) {
 }
 
 function addFavorito(explicador) {
-  let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-
-  const duplicado = favoritos.some(f => f.nome === explicador.nome && f.email === explicador.email);
-  if (duplicado) {
-    showToast('⚠️ Este explicador já está nos favoritos.', 'bg-warning');
+  const user = JSON.parse(localStorage.getItem('userLoggedIn'));
+  if (!user || user.tipo !== 'aluno') {
+    showToast('⚠️ Apenas alunos podem favoritar explicadores.', 'bg-warning');
     return;
   }
 
-  favoritos.push(explicador);
+  let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+  const jaFavoritado = favoritos.some(f => 
+    f.email === explicador.email && f.alunoEmail === user.email
+  );
+
+  if (jaFavoritado) {
+    showToast('⚠️ Você já favoritou este explicador.', 'bg-warning');
+    return;
+  }
+
+  const favoritoComAluno = {
+    ...explicador,
+    alunoEmail: user.email,
+    dataAdicao: new Date().toLocaleDateString('pt-PT')
+  };
+
+  favoritos.push(favoritoComAluno);
   localStorage.setItem('favoritos', JSON.stringify(favoritos));
   adicionarPontos(5);
   showToast('✅ Explicador adicionado aos favoritos!', 'bg-success');
@@ -82,14 +97,11 @@ function fecharToast() {
 let explicadorSelecionado = null;
 let marcacaoModal = null;
 
-// Inicializa o modal quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', function() {
-  // Inicializa o modal
   const modalElement = document.getElementById('marcacaoModal');
   if (modalElement) {
     marcacaoModal = new bootstrap.Modal(modalElement);
     
-    // Captura os dados ao abrir o modal
     modalElement.addEventListener('show.bs.modal', function (event) {
       const button = event.relatedTarget;
       const explicadorData = button.getAttribute('data-explicador');
@@ -108,14 +120,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // Limpa os dados quando o modal é fechado
     modalElement.addEventListener('hidden.bs.modal', function () {
       explicadorSelecionado = null;
       document.getElementById('marcacaoForm').reset();
     });
   }
   
-  // Configura o evento de submissão do formulário
   const form = document.getElementById('marcacaoForm');
   if (form) {
     form.addEventListener('submit', function(e) {
@@ -125,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// 🟥 Processa marcação
 function marcarExplicacao() {
   if (!explicadorSelecionado) {
     alert('Erro: Nenhum explicador selecionado.');
@@ -165,10 +174,8 @@ function marcarExplicacao() {
 
     localStorage.setItem('marcacoes', JSON.stringify(marcacoes));
     
-    // Exibe mensagem de sucesso
     showToast(`✅ Aula marcada com ${explicadorSelecionado.nome} para ${data} às ${hora}`, 'bg-success');
     
-    // Fecha o modal
     if (marcacaoModal) {
       marcacaoModal.hide();
     }

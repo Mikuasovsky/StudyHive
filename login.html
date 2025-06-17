@@ -34,7 +34,7 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      // Admin hardcoded
+      
       if(email === 'admin@studyhive.com' && password === 'admin123') {
         localStorage.setItem('userLoggedIn', JSON.stringify({ tipo: 'admin', nome: 'Administrador' }));
         alert('Login como Admin!');

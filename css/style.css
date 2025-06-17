@@ -341,11 +341,33 @@ h1, h2, h3 {
   border-color: #B71C1C;
 }
 
+.criarPerfilBtn{
+  background-color: #D32F2F;
+  border-color: #D32F2F;
+  font-size: 18px; 
+  padding: 15px 30px; 
+  border-radius: 30px; 
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+}
+.criarPerfilBtn:hover {
+  background-color: #B71C1C;
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  border-color: #B71C1C;
+}
+
+
 #disciplinas{
   margin-bottom: 15px;
 }
 
-/* Corrige problemas de z-index */
+
 .modal-backdrop {
   z-index: 1040;
 }
@@ -361,7 +383,7 @@ h1, h2, h3 {
 }
 
 
-/* Melhora a aparência do modal */
+
 .modal-content {
   border: none;
   box-shadow: 0 0 20px rgba(0,0,0,0.2);

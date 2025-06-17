@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="home.html">StudyHive</a>
     <div class="d-flex align-items-center">
       
-      <a href="perfil.html" class="btn btn-outline-light btn-sm me-2" title="Meu Perfil">
+      <a href="#" id="perfilLink" class="btn btn-outline-light btn-sm me-2" title="Meu Perfil">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
           class="bi bi-person-circle" viewBox="0 0 16 16">
           <path d="M11 10a2 2 0 1 0-4 0 2 2 0 0 0 4 0z"/>
@@ -21,22 +21,3 @@
     </div>
   </div>
 </nav>
-
-<script>
-  function checkAuth() {
-    const user = JSON.parse(localStorage.getItem('userLoggedIn'));
-    if (!user) {
-      window.location.href = 'home.html';
-    } else {
-      document.getElementById('userName').textContent = `Olá, ${user.nome} (${user.tipo})`;
-    }
-  }
-
-  function logout() {
-    localStorage.removeItem('userLoggedIn');
-    alert('Sessão terminada.');
-    window.location.href = 'home.html';
-  }
-
-  checkAuth();
-</script>
