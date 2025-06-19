@@ -8,7 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   carregarPerfilExplicador(user.email);
   carregarAlunos(user.email);
+  carregarPedidosMarcacao(user.email);
   atualizarEstatisticas(user.email);
+  
+
+  setInterval(() => {
+    carregarPedidosMarcacao(user.email);
+    atualizarEstatisticas(user.email);
+  }, 30000);
 });
 
 function carregarPerfilExplicador(email) {
@@ -120,20 +127,123 @@ function carregarAlunos(emailExplicador) {
   }
 }
 
+function carregarPedidosMarcacao(emailExplicador) {
+  const pedidosContainer = document.getElementById('pedidosMarcacaoContainer');
+  if (!pedidosContainer) return;
+  
+  const pedidos = JSON.parse(localStorage.getItem('pedidosMarcacao')) || [];
+  const meusPedidos = pedidos
+    .filter(pedido => pedido.idExplicador === emailExplicador && pedido.status === 'pendente')
+    .sort((a, b) => new Date(a.dataPedido) - new Date(b.dataPedido));
+  
+  if (meusPedidos.length > 0) {
+    pedidosContainer.innerHTML = `
+      <div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+          <h3 class="mb-0">Pedidos de Marcação Pendentes</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Aluno</th>
+                  <th>Data</th>
+                  <th>Hora</th>
+                  <th>Mensagem</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${meusPedidos.map(pedido => `
+                  <tr>
+                    <td>${pedido.nomeAluno}</td>
+                    <td>${new Date(pedido.data).toLocaleDateString('pt-PT')}</td>
+                    <td>${pedido.hora}</td>
+                    <td>${pedido.mensagem || 'Sem mensagem'}</td>
+                    <td>
+                      <button class="btn btn-sm btn-success me-1" onclick="atualizarStatusPedido(${pedido.id}, 'aceite')">
+                        <i class="fas fa-check"></i> Aceitar
+                      </button>
+                      <button class="btn btn-sm btn-danger" onclick="atualizarStatusPedido(${pedido.id}, 'rejeitado')">
+                        <i class="fas fa-times"></i> Recusar
+                      </button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    pedidosContainer.innerHTML = `
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        Não há pedidos de marcação pendentes no momento.
+      </div>
+    `;
+  }
+}
+
+function atualizarStatusPedido(pedidoId, novoStatus) {
+  const pedidos = JSON.parse(localStorage.getItem('pedidosMarcacao')) || [];
+  const pedidoIndex = pedidos.findIndex(p => p.id === pedidoId);
+  
+  if (pedidoIndex !== -1) {
+    pedidos[pedidoIndex].status = novoStatus;
+    localStorage.setItem('pedidosMarcacao', JSON.stringify(pedidos));
+    
+    
+    const user = JSON.parse(localStorage.getItem('userLoggedIn'));
+    if (user && user.tipo === 'explicador') {
+      carregarPedidosMarcacao(user.email);
+      atualizarEstatisticas(user.email);
+      
+      
+      const toast = new bootstrap.Toast(document.getElementById('statusToast'));
+      const toastMessage = document.getElementById('toastMessage');
+      
+      if (novoStatus === 'aceite') {
+        toastMessage.textContent = 'Pedido aceite com sucesso!';
+        toastMessage.parentElement.className = 'toast-header bg-success text-white';
+      } else {
+        toastMessage.textContent = 'Pedido recusado.';
+        toastMessage.parentElement.className = 'toast-header bg-danger text-white';
+      }
+      
+      toast.show();
+    }
+  }
+}
+
 function atualizarEstatisticas(emailExplicador) {
-  const marcacoes = JSON.parse(localStorage.getItem('marcacoes')) || [];
-  const minhasAulas = marcacoes.filter(m => m.email === emailExplicador);
+ 
+  const pedidos = JSON.parse(localStorage.getItem('pedidosMarcacao')) || [];
+  const totalAulas = pedidos.filter(p => p.idExplicador === emailExplicador && p.status === 'aceite').length;
+  document.getElementById('totalAulas').textContent = totalAulas;
   
-  document.getElementById('totalAulas').textContent = minhasAulas.length;
-  
+
   const explicadores = JSON.parse(localStorage.getItem('explicadores')) || [];
   const meuPerfil = explicadores.find(e => e.email === emailExplicador);
   
-  if (meuPerfil && typeof meuPerfil.classificacao === 'number') {
-    document.getElementById('avaliacaoMedia').innerHTML = `
-      ${meuPerfil.classificacao.toFixed(1)} 
-      ${'⭐'.repeat(Math.round(meuPerfil.classificacao))}
-    `;
+  if (meuPerfil) {
+   
+    if (typeof meuPerfil.classificacao === 'number') {
+      document.getElementById('avaliacaoMedia').innerHTML = `
+        ${meuPerfil.classificacao.toFixed(1)} 
+        ${'⭐'.repeat(Math.round(meuPerfil.classificacao))}
+      `;
+    }
+    
+    
+    const alunosUnicos = new Set();
+    pedidos
+      .filter(p => p.idExplicador === emailExplicador)
+      .forEach(p => alunosUnicos.add(p.idAluno));
+      
+    document.getElementById('totalAlunos').textContent = alunosUnicos.size;
   }
 }
 

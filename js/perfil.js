@@ -9,8 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const pontos = user.pontos || 0;
   const nivel = getNivel(pontos);
 
-  document.getElementById('perfilNome').textContent = user.nome;
-  document.getElementById('perfilTipo').textContent = user.tipo;
+  
+  document.getElementById('perfilNome').textContent = user.nome || 'Não informado';
+  document.getElementById('perfilEmail').textContent = user.email || 'Não informado';
+  document.getElementById('perfilTipo').textContent = user.tipo === 'aluno' ? 'Aluno' : 'Explicador';
   document.getElementById('perfilPontos').textContent = pontos;
   document.getElementById('perfilNivel').textContent = nivel;
 

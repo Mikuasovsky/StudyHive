@@ -41,18 +41,18 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
 
 
 function preencherNiveisDropdown() {
-  // Carrega os níveis do localStorage ou usa valores padrão
+ 
   const niveis = JSON.parse(localStorage.getItem('niveis')) || ['Básico', 'Secundário', 'Universitário'];
   const nivelSelect = document.getElementById('nivel');
   
-  // Limpa opções existentes, mantendo apenas a primeira opção
+
   while (nivelSelect.options.length > 1) {
     nivelSelect.remove(1);
   }
   
-  // Adiciona os níveis do localStorage
+  
   niveis.forEach(nivel => {
-    if (nivel && nivel.trim() !== '') {  // Verifica se o nível não está vazio
+    if (nivel && nivel.trim() !== '') {  
       const option = document.createElement('option');
       option.value = nivel;
       option.textContent = nivel;
@@ -74,12 +74,12 @@ function preencherDisciplinasDropdown() {
 }
 
 
-// Inicializa os dropdowns quando o DOM estiver pronto
+
 document.addEventListener('DOMContentLoaded', function() {
   preencherDisciplinasDropdown();
   preencherNiveisDropdown();
   
-  // Atualiza os níveis quando houver mudanças no localStorage
+  
   window.addEventListener('storage', function(event) {
     if (event.key === 'niveis') {
       preencherNiveisDropdown();

@@ -94,94 +94,80 @@ function fecharToast() {
   document.getElementById('favoritoToast').style.display = 'none';
 }
 
-let explicadorSelecionado = null;
-let marcacaoModal = null;
-
-document.addEventListener('DOMContentLoaded', function() {
-  const modalElement = document.getElementById('marcacaoModal');
-  if (modalElement) {
-    marcacaoModal = new bootstrap.Modal(modalElement);
+const modal = document.getElementById('marcacaoModal');
+if (modal) {
+  modal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const explicador = JSON.parse(button.getAttribute('data-explicador'));
     
-    modalElement.addEventListener('show.bs.modal', function (event) {
-      const button = event.relatedTarget;
-      const explicadorData = button.getAttribute('data-explicador');
-      
-      if (explicadorData) {
-        try {
-          const explicador = JSON.parse(explicadorData);
-          explicadorSelecionado = explicador;
-          
-          document.getElementById('explicadorNome').textContent = `Explicador: ${explicador.nome}`;
-          document.getElementById('dataMarcacao').value = '';
-          document.getElementById('horaMarcacao').value = '';
-        } catch (e) {
-          console.error('Erro ao processar dados do explicador:', e);
-        }
-      }
-    });
+    const hoje = new Date().toISOString().split('T')[0];
+    const dataInput = document.getElementById('dataExplicacao');
+    dataInput.min = hoje;
+    dataInput.value = hoje;
     
-    modalElement.addEventListener('hidden.bs.modal', function () {
-      explicadorSelecionado = null;
-      document.getElementById('marcacaoForm').reset();
-    });
-  }
-  
-  const form = document.getElementById('marcacaoForm');
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      marcarExplicacao();
-    });
-  }
-});
-
-function marcarExplicacao() {
-  if (!explicadorSelecionado) {
-    alert('Erro: Nenhum explicador selecionado.');
-    return;
-  }
-
-  const dataElement = document.getElementById('dataMarcacao');
-  const horaElement = document.getElementById('horaMarcacao');
-  
-  const data = dataElement.value;
-  const hora = horaElement.value;
-  
-  if (!data) {
-    alert('Por favor, selecione uma data!');
-    dataElement.focus();
-    return;
-  }
-  
-  if (!hora) {
-    alert('Por favor, selecione um horário!');
-    horaElement.focus();
-    return;
-  }
-
-  try {
-    const user = JSON.parse(localStorage.getItem('userLoggedIn'));
-    const marcacoes = JSON.parse(localStorage.getItem('marcacoes')) || [];
-    
-    marcacoes.push({
-      explicador: explicadorSelecionado.nome,
-      email: explicadorSelecionado.email,
-      aluno: user?.nome || "Anônimo",
-      data: data,
-      hora: hora,
-      disciplina: explicadorSelecionado.disciplina
-    });
-
-    localStorage.setItem('marcacoes', JSON.stringify(marcacoes));
-    
-    showToast(`✅ Aula marcada com ${explicadorSelecionado.nome} para ${data} às ${hora}`, 'bg-success');
-    
-    if (marcacaoModal) {
-      marcacaoModal.hide();
-    }
-    
-  } catch (error) {
-    console.error('Erro ao marcar explicação:', error);
-    showToast('❌ Erro ao marcar a explicação. Tente novamente.', 'bg-danger');
-  }
+    document.getElementById('explicadorEmailSelecionado').value = explicador.email;
+    document.getElementById('nomeExplicadorSelecionado').innerText = explicador.nome;
+  });
 }
+
+document.getElementById('formMarcacao').addEventListener('submit', function (e) {
+  e.preventDefault();
+  
+  const dataInput = document.getElementById('dataExplicacao');
+  const data = dataInput.value;
+  const hora = document.getElementById('horaExplicacao').value;
+  const mensagem = document.getElementById('mensagem').value;
+  const emailExplicador = document.getElementById('explicadorEmailSelecionado').value;
+  const nomeExplicador = document.getElementById('nomeExplicadorSelecionado').textContent;
+  
+  
+  const hoje = new Date();
+  const dataSelecionada = new Date(data);
+  
+  
+  hoje.setHours(0, 0, 0, 0);
+  dataSelecionada.setHours(0, 0, 0, 0);
+  
+  if (dataSelecionada < hoje) {
+    showToast('⚠️ Por favor, selecione uma data igual ou posterior a hoje.', 'bg-warning');
+    dataInput.focus();
+    return;
+  }
+  
+
+  const user = JSON.parse(localStorage.getItem('userLoggedIn'));
+  
+  if (!user) {
+    alert('Por favor, faça login para marcar uma explicação.');
+    window.location.href = 'login.html';
+    return;
+  }
+  
+  const pedidoMarcacao = {
+    id: Date.now(), 
+    idExplicador: emailExplicador,
+    nomeExplicador: nomeExplicador,
+    idAluno: user.email,
+    nomeAluno: user.nome,
+    data: data,
+    hora: hora,
+    mensagem: mensagem,
+    status: 'pendente',
+    dataPedido: new Date().toISOString()
+  };
+  
+  
+  const pedidos = JSON.parse(localStorage.getItem('pedidosMarcacao')) || [];
+  pedidos.push(pedidoMarcacao);
+  localStorage.setItem('pedidosMarcacao', JSON.stringify(pedidos));
+  
+ 
+  showToast(`✅ Pedido de explicação enviado para ${nomeExplicador}`, 'bg-success');
+  
+  
+  const modalEl = bootstrap.Modal.getInstance(modal);
+  modalEl.hide();
+  
+  
+  e.target.reset();
+});

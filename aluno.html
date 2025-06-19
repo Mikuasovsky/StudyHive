@@ -25,7 +25,6 @@
         <div class="col-md-3">
           <select id="nivel" class="form-select">
             <option value="">Todos os níveis</option>
-            <!-- Níveis serão carregados dinamicamente pelo JavaScript -->
           </select>
         </div>
 
@@ -67,38 +66,48 @@
           </div>
         </div>
     </div>
-
+</div>
     
- 
-
-<div class="modal fade" id="marcacaoModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">Marcar Explicação</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p id="explicadorNome" class="fw-bold mb-3"></p>
-        <form id="marcacaoForm">
-          <div class="mb-3">
-            <label for="dataMarcacao" class="form-label">Data:</label>
-            <input type="date" id="dataMarcacao" class="form-control" required>
+    <!-- Modal Marcação de Explicação -->
+    <div class="modal fade" id="marcacaoModal" tabindex="-1" aria-labelledby="marcacaoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="marcacaoModalLabel">Agendar Explicação</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
-          <div class="mb-3">
-            <label for="horaMarcacao" class="form-label">Hora:</label>
-            <input type="time" id="horaMarcacao" class="form-control" required>
+          <div class="modal-body">
+            <p><strong>Explicador Selecionado:</strong> <span id="nomeExplicadorSelecionado" class="text-primary"></span></p>
+            <form id="formMarcacao">
+              <div class="mb-3">
+                <label for="dataExplicacao" class="form-label">Data</label>
+                <input type="date" class="form-control" id="dataExplicacao" required>
+              </div>
+              <div class="mb-3">
+                <label for="horaExplicacao" class="form-label">Hora</label>
+                <input type="time" class="form-control" id="horaExplicacao" required>
+              </div>
+              <div class="mb-3">
+                <label for="mensagem" class="form-label">Mensagem (opcional)</label>
+                <textarea class="form-control" id="mensagem" rows="3"></textarea>
+              </div>
+              <input type="hidden" id="explicadorEmailSelecionado">
+            </form>
           </div>
-          <div class="modal-footer border-0">
+          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Confirmar</button>
+            <button type="submit" class="btn btn-primary" form="formMarcacao">Agendar</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-</div>
+
+ 
+
+
+
+
+
 
 
   <script src="js/model.js"></script>

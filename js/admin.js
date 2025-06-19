@@ -64,7 +64,7 @@ document.getElementById('addNivelForm').addEventListener('submit', function(e){
     niveis.push(novo);
     localStorage.setItem('niveis', JSON.stringify(niveis));
     
-    // Dispara um evento de storage para atualizar outras abas/páginas
+    
     const event = new Event('storage');
     event.key = 'niveis';
     window.dispatchEvent(event);
@@ -72,7 +72,7 @@ document.getElementById('addNivelForm').addEventListener('submit', function(e){
     renderNiveis();
     document.getElementById('novoNivel').value = '';
     
-    // Mostra mensagem de sucesso
+ 
     alert('Nível adicionado com sucesso!');
   }
 });
